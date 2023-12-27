@@ -1,11 +1,16 @@
 from Models.TokenModel import TokenModel
 from datetime import datetime, timedelta
-from Database.TokenDB import access_tokens_db
 import secrets
-from Database.UserDB import fake_users_db
 
 class TokenService:
-    access_tokens_db = access_tokens_db
+
+    @staticmethod
+    def new_token(user_id: str):
+        access_token = secrets.token_urlsafe(128)
+        expires_in = 900
+        newTokenModel = TokenModel(user_id = user_id, access_token = access_token, expires_in = datetime.now() + timedelta(seconds=expires_in))
+        return newTokenModel
+
     @staticmethod
     def revoke_access_token(access_token: str):
         if access_token in TokenService.access_tokens_db:

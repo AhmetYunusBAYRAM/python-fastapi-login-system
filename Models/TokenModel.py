@@ -1,7 +1,7 @@
 from pydantic import BaseModel
-from typing import Optional
+from datetime import datetime, timedelta
 
 class TokenModel(BaseModel):
     access_token: str
-    tenantId: str
-    expires_in: int
+    user_id: str
+    expires_in: datetime

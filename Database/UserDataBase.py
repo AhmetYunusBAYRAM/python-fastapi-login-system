@@ -10,10 +10,8 @@ class UserDatabase:
         database_handler = DatabaseHandler(DataBaseEnum.Cebinde_DB.value)
         database_handler.connect()
 
-        if UserDatabase.control_password_email(loginModel,database_handler):
-            return ResponseModel(code=200, message="Başarıyla login oldundu!", data={"username": loginModel.user_email})
-        else:
-            return ResponseModel(code=400, message="Parola veya Kullanıcı adı yanlış!", data={"username": loginModel.user_email})
+        user_id = UserDatabase.control_password_email(loginModel, database_handler)
+        return user_id
 
     def create_user_account(userModel : UserModel):
         database_handler = DatabaseHandler(DataBaseEnum.Cebinde_DB.value)
@@ -62,7 +60,7 @@ class UserDatabase:
     @classmethod
     def control_password_email(self, loginModel : LoginModel, database_handler):
         try:
-            select_query = "SELECT * FROM user_auth WHERE user_email = %(user_email)s and user_password = %(user_password)s"
+            select_query = "SELECT user_id FROM user_auth WHERE user_email = %(user_email)s and user_password = %(user_password)s"
             database_handler.cursor.execute(select_query, vars(loginModel))
             result = database_handler.cursor.fetchone()
 
