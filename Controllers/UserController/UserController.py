@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,HTTPException
 from Models.ResponseModel import ResponseModel
 from Models.UserModel import UserModel
 from Models.LoginModel import LoginModel
@@ -10,9 +10,15 @@ router = APIRouter()
 
 @router.post("/create-account", response_model=ResponseModel)
 async def create_user(form_data: UserModel):
-    return await UserService.signup(userModel=form_data)
+    response = await UserService.signup(userModel=form_data)
+    if response.code != 200:
+        raise HTTPException(status_code=400, detail="Bu mail adresine ait hesap bulunmaktadır.")
+    return response
 
 
 @router.get("/login", response_model=ResponseModel)
 async def login(form_data: LoginModel):
-    return await UserService.login(form_data)
+    response = await UserService.login(loginModel=form_data)
+    if response.code != 200:
+        raise HTTPException(status_code=400, detail="Kullanıcı adı veya parola yanlış!")
+    return response

@@ -6,8 +6,7 @@ from datetime import datetime, timedelta
 class TokenDataBase:
     @classmethod
     def delete_token(self):
-        print("Delete token çalıştı"),
-        print(datetime.now())
+        print("Token Deleted")
         database_handler = DatabaseHandler(DataBaseEnum.Access_Token_DB.value)
         database_handler.connect()
 

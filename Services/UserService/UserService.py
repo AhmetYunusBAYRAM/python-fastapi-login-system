@@ -21,4 +21,6 @@ class UserService:
                 tokenService = TokenService
                 tokenModel = tokenService.TokenService.new_token(user_id[0])
                 TokenDataBase.create_token(tokenModel)
-                return ResponseModel(data= tokenModel.dict(), message="Successfully logged in", code=200)
+                return ResponseModel(data= tokenModel.dict(), message="Başarıyla oturum açıldı!", code=200)
+            else :
+                return  ResponseModel(data= loginModel.user_email,message="Kullanıcı adı veya parola yanlış!",code = 400)

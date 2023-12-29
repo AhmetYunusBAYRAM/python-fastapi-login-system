@@ -17,7 +17,6 @@ class DatabaseHandler:
             self.conn = mysql.connector.connect(**self.db_config)
 
             if self.conn.is_connected():
-                print("Bağlantı başarıyla kuruldu.")
                 self.cursor = self.conn.cursor()
 
         except mysql.connector.Error as err:
@@ -27,4 +26,3 @@ class DatabaseHandler:
         if self.conn and self.conn.is_connected():
             self.cursor.close()
             self.conn.close()
-            print("Bağlantı kapatıldı.")
